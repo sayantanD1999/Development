@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="jquery-3.5.1.min.js"></script>
+    <title>Development</title>
+</head>
+<style>
+    body {
+        background-image: url(pics/back.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-weight: bolder;
+        background-attachment: fixed;
+        overflow: auto;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-weight: bolder;
+
+    }
+
+    #login_box {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        text-align: center;
+        background-color: rgb(16, 26, 44, 0.1);
+        padding-top: 20px;
+        font-size: larger;
+        border-radius: 40px;
+        color: #eee;
+    }
+
+    #accord {
+        padding-top: 50px;
+        outline: none;
+    }
+
+    .navbar {
+        background-color: rgb(22, 21, 21);
+        width: 100%;
+    }
+
+    #search_ip {
+        margin-left: 20%;
+        width: 55%;
+        height: 40px;
+        border-radius: 30px;
+    }
+
+    #decision_box {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        text-align: center;
+        background-color: rgb(16, 26, 44, 0.1);
+        padding-top: 20px;
+        font-size: larger;
+        border-radius: 40px;
+        color: #eee;
+    }
+    #details {
+        font-size: larger;
+    }
+
+    .accordion {
+        font-size: larger;
+        font-weight: bolder;
+        margin-top: 5%;
+        padding-bottom: 100px;
+        margin-left: 10%;
+        text-align: center;
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 80%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+        border-radius: 5px;
+        opacity: 0.9;
+        outline: none;
+    }
+
+    .active,
+    .accordion:hover {
+        background-color: #ccc;
+        opacity: 0.6;
+        font-size: x-large;
+        font-weight: 2000;
+    }
+
+    .ip {
+        outline: none;
+        border-radius: 5px;
+        padding-left: 10px;
+        font-size: large;
+    }
+    .ip2 {
+        outline: none;
+        border-radius: 5px;
+        padding-left: 10px;
+        font-size: large;
+    }
+
+    .accordion:after {
+        content: '\002B';
+        color: #777;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .panel {
+        opacity: 0.7;
+        width: 80%;
+        margin-left: 10%;
+        padding: 0 18px;
+        background-color: #eee;
+        max-height: 0;
+        overflow: auto;
+        transition: max-height 0.5s ease-out;
+
+    }
+
+    .delete_but {
+        margin-left: 100px;
+        border-radius: 50px;
+        background-color: rgb(247, 56, 56, 0.7);
+    }
+
+    #save_but {
+        height: 70px;
+        margin-top: 5%;
+        width: 100px;
+        margin-left: 45%;
+        border-radius: 50px;
+        background-color: rgba(85, 255, 113, 0.7);
+    }
+
+    #target2 {
+        height: 40%;
+        width: 90%;
+    }
+
+    #back_div {
+        overflow: scroll;
+        margin-top: 20px;
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        color: beige;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.6);
+        /* Black w/ opacity */
+        padding-top: 60px;
+    }
+
+    #target2 {
+        background-color: aquamarine;
+    }
+
+    .ip2{
+        height: 60px;
+        width: 40%;
+
+
+    }
+</style>
+
+<body>
+    <div class="navbar">
+        <img src="pics/flag.jpg" style="height: 50px; width: 80px; padding: 6px;" alt="Natinal Flag">
+        <h2 style="text-align: center; color: #ccc;">विकासशील भारत</h2>
+        <button class="btn btn-outline-success" style="float: right;" onclick="login()">Login</button>
+    </div>
+
+    <div class="container-fluid">
+        <div id="login_box">
+
+            <input class="ip" type="text" placeholder="User Id" id="user_Id">
+            <br>
+            <br>
+            <input class="ip" type="password" placeholder="Password" id="user_password">
+            <br>
+            <br>
+            <button class="btn btn-dark" style="background-color: rgb(18, 18, 54);" onclick="login_account()"
+                id="login_btn">Log In</button>
+
+        </div>
+
+
+
+        <div id="decision_box" style="display: none;">
+
+            <button class="btn btn-dark" style="background-color: rgb(16, 26, 44);" onclick="new_project()">Upload New
+                Project</button>
+            <br>
+            <br>
+            <button class="btn btn-dark" style="background-color: rgb(16, 26, 44);" onclick="edit_project()">Edit
+                Existing
+                Project</button>
+
+        </div>
+
+
+        <div id="accord">
+
+            <input class="ip" id="search_ip" placeholder="search">
+
+            <div id="accord2">
+                <button class="accordion">Bus Terminal</button>
+                <div class="panel">
+                    <h3>Construction of 22 new bus terminals have been planned in larger towns for better connection and
+                        thus supporting tourism in larger towns.</h3>
+                    <h2>Approved by : Central Government</h2>
+                    <h3>Expected date of completion : 24.05.2021</h3>
+                    <h3>Budget : ₹ 400 Crores </h3>
+                    <h3>Other Ministries Involved : Finance and Tourism Ministry</h3>
+                </div>
+
+                <button class="accordion"> Metropolitan Highway Thread </button>
+                <div class="panel">
+                    <p>Construction of 8 new Highways has been planned to connect metropolitan cities for enhancement of
+                        better connectivity and transportation.</p>
+                    <h2>Approved by : Central and Metroplolitan Government </h2>
+                    <h3>Expected date of completion : 15.09.2021</h3>
+                    <h3>Budget : ₹ 700 Crores </h3>
+                    <h3>Other Ministries Involved : Finance, Transport and Tourism Ministry</h3>
+                </div>
+
+                <button class="accordion">Sanitation and Privy facilities</button>
+                <div class="panel">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip
+                        ex ea commodo consequat.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip
+                        ex ea commodo consequat.</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="new_project" style=" overflow: auto; display: none; text-align: center; color: blanchedalmond;">
+            <div class="contianer-fluid">
+                <h2>Title of the project</h2>
+                <input class="ip2" type="text" id="title" placeholder="Title">
+                <br>
+                <br>
+                <h3>Description of the project</h3>
+                <textarea class="ip2" id="description" placeholder="Description" cols="30" rows="6"></textarea>
+                <br>
+                <br>
+                <h3>Estimated Budget</h3>
+                <input class="ip2" type="number" id="budget" value="0" placeholder="Budget">
+                <br>
+                <br>
+                <h3>Estimated time of completion</h3>
+                <input class="ip2" type="date" id="date" value="">
+                <br>
+                <br>
+                <h3>Sanctioned By</h3>
+
+                <input type="radio" name="ans" class="options" value="Central Government">Central Government</input><br>
+                <input type="radio" name="ans" class="options" value="State Government" onclick="stategovt()"
+                    value="State Government">State
+                Government</input><br>
+                <input type="radio" name="ans" class="options" value="Both" onclick="stategovt()"
+                    value="Both">Both</input><br>
+
+                <div id="state_govt"></div>
+                <br>
+                <br>
+                <h3>Other Ministry involved</h3>
+                <input class="ip2" type="text" id="ministry">
+                <br>
+                <br>
+
+                <h3>Letter of authorization</h3>
+                <input class="ip2" type="file" id="img" name="img" src="" id="file" onchange="loadFile(event)"
+                    accept="image/*"> <!-- input you want to read from (src) -->
+
+                <div id="containerQ" style="display: none;">
+                    <span onclick="document.getElementById('containerQ').style.display='none'" class="close"
+                        title="Close Modal">&times;</span>
+                    <img id="target2"
+                        style="margin-left: 8%; margin-top: 5%; padding-bottom: 40px; height: 600px; width:400px; " />
+                    <!-- image you want to display it (target) -->
+                </div>
+                <br>
+                <br>
+                <button class="btn btn-success" onclick="upload_project()">Upload Details</button>
+                <br><br><br>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#search_ip").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".accordion").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        var loadFile = function (event) {
+            // image = document.getElementById('target');
+            img = URL.createObjectURL(event.target.files[0]);
+        };
+
+        function login() {
+            document.getElementById("accord").style.display = "none";
+            document.getElementById("login_box").style.display = "block";
+        }
+
+        function login_account() {
+            pass = 1234;
+            uid = "sd@99";
+
+            var password = document.getElementById("user_password").value;
+            var userId = document.getElementById("user_Id").value;
+            if (password == pass && userId == uid) {
+                document.getElementById("login_box").style.display = "none";
+                document.getElementById("decision_box").style.display = "block";
+            }
+            else {
+                alert("Invalid Data");
+            }
+
+        }
+        function stategovt() {
+            var ip = document.createElement("INPUT");
+            ip.id = "ip_sg";
+            ip.setAttribute("type", "text");
+            ip.setAttribute("placeholder", "Name of the state");
+            document.getElementById("state_govt").appendChild(ip);
+            console.log("Running");
+        }
+        function new_project() {
+            document.getElementById("decision_box").style.display = "none";
+            document.getElementById("new_project").style.display = "block";
+        }
+        function edit_project() {
+
+            document.getElementById("accord").contentEditable = true;
+            document.getElementById("accord").style.display = "block";
+            document.getElementById("decision_box").style.display = "none";
+            var accordions = document.getElementsByClassName("accordion");
+            for (var i = 0; i < accordions.length; i++) {
+                var but = document.createElement("BUTTON");
+                but.innerHTML = "Delete";
+                but.className = "delete_but";
+
+                but.onclick = function () {
+                    var content = this.parentElement;
+                    var heading = this.nextElementSibling;
+                    content.remove();
+                    heading.remove();
+                }
+                accordions[i].appendChild(but);
+                //panels[i].contentEditable = true;
+            }
+            document.getElementById("accord").style.display = "block";
+
+            var save = document.createElement("button");
+            save.innerHTML = "Save";
+            save.id = "save_but";
+            save.onclick = function () {
+                document.getElementById("accord").contentEditable = false;
+                document.getElementById("save_but").style.display = "none";
+
+                var d = document.getElementsByClassName("delete_but");
+                for (var i = 0; i < d.length; i++) {
+                    d[i].style.display = "none";
+                }
+
+            }
+            document.getElementById("accord").appendChild(save);
+        }
+        
+        function upload_project() {
+            // var a = document.getElementsByClassName("ip2");
+            // for(var i=0;i<a.length;i++)
+            // {
+            //     if(a[i].value.length == 0)
+            //     {
+            //         alert("Please provide necessary details");
+            //     }
+            // }
+
+
+            accordion();
+            document.getElementById("new_project").style.display = "none";
+            console.log("executed");
+            var project_name = document.getElementById("title").value;
+            header = document.createElement("button");
+            header.id = "header";
+            header.className = "accordion";
+            header.innerHTML = project_name;
+            console.log(project_name);
+
+            var details = document.getElementById("description").value;
+            description = document.createElement("p");
+            description.id = "details";
+            description.innerHTML = details;
+
+            console.log(details);
+
+            var budget = document.getElementById("budget").value;
+            cost = document.createElement("h3");
+            cost.id = "cost";
+            cost.innerHTML = "Budget : ₹ " + budget + " Crores";
+            console.log(budget);
+
+
+            var govt = document.getElementsByName("ans");
+            for (var i = 0; i < govt.length; i++) {
+                if (govt[i].checked) {
+                    var val = govt[i].value;
+                }
+            }
+
+            console.log(val);
+
+            if (val == "State Government") {
+                var sg = document.getElementById("ip_sg").value;
+                console.log(sg);
+                var x = document.createElement("h3");
+                x.id = "gov";
+                x.innerHTML = "Sanctioned By " + sg;
+            }
+
+            if (val == "Both") {
+                var sg = document.getElementById("ip_sg").value;
+                var x = document.createElement("h3");
+                x.id = "gov";
+                x.innerHTML = "Sanctioned By Central  and " + sg + " Government";
+                console.log(x);
+            }
+
+            if (val == "Central Government") {
+                //var sg = document.getElementById("ip_sg").value;
+                var x = document.createElement("h3");
+                x.id = "gov";
+                x.innerHTML = "Sanctioned By  " + sg + " Government";
+                console.log(x);
+            }
+            var date = document.getElementById("date").value;
+            cdate = document.createElement("h4");
+            cdate.id = "get_date";
+            cdate.innerHTML = " Expected Date of completion : " + date;
+            console.log(date);
+
+            var ministry = document.getElementById("ministry").value;
+            m = document.createElement("h4");
+            m.id = "other_ministry";
+            m.innerHTML = "Other Ministry involved : Ministry of " + ministry;
+
+
+            console.log(ministry);
+            imgdiv = document.createElement("img");
+            imgdiv.id = "target2";
+            imgdiv.src = img;
+
+
+
+
+            newdiv = document.createElement("div");
+            newdiv.className = "panel";
+            newdiv.appendChild(description);
+            newdiv.appendChild(cost);
+            console.log("hhw");
+            newdiv.appendChild(x);
+            newdiv.appendChild(cdate);
+            newdiv.appendChild(m);
+            newdiv.appendChild(imgdiv);
+            console.log("vfvweh");
+
+
+            document.getElementById("accord").style.display = "block";
+            document.getElementById("accord").appendChild(header);
+            console.log("holo");
+            document.getElementById("accord").appendChild(newdiv);
+            console.log("end");
+            accordion();
+
+
+        }
+
+        function accordion() {
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+        }
+        accordion();
+
+    </script>
+</body>
+
+</html>
